@@ -1,54 +1,44 @@
-# Web Scraper
+# Website Scraper
 
-This is a simple web scraper written in Go that downloads the HTML content of a given website and saves it along with its assets (images, scripts, links) to a local directory.
+This is a simple command-line tool written in Go for scraping a website and downloading its HTML content along with associated assets (images, scripts, stylesheets, etc.). The tool uses Go's standard library and the "golang.org/x/net/html" package for parsing HTML.
 
 ## Usage
 
-### Prerequisites
-Make sure you have Go installed on your machine.
-
-### Installation
-Clone this repository and navigate to the project directory:
-
 ```bash
-git clone https://github.com/tacoroumen/golang-web-scraper
-cd golang-web-scraper
+go run main.go -url <website_url>
 ```
 
-Build the project:
+Replace `<website_url>` with the URL of the website you want to scrape.
 
-```bash
-go build
-```
+## Features
 
-### Running the Scraper
-
-To run the web scraper, use the following command:
-
-```bash
-./web-scraper -url <website-url>
-```
-
-Replace `<website-url>` with the URL of the website you want to scrape.
-
-### Example
-
-```bash
-./web-scraper -url https://example.com
-```
-
-This will create a folder named `scraped` in the current directory. Inside the `scraped` folder, a subfolder with the name of the website's domain (without 'www.') will be created. The HTML content of the website will be saved as `index.html` in this folder, and the assets (images, scripts, links) will be downloaded and saved in their respective directories.
-
-## Flags
-
-- `-url`: Specifies the URL of the website to scrape.
+- Downloads the HTML content of the specified website.
+- Downloads images, scripts, stylesheets, and other assets linked in the HTML.
+- Parses CSS styles and extracts background images.
 
 ## Dependencies
 
-The following external packages are used in this project:
+The tool uses only the standard library and the "golang.org/x/net/html" package for HTML parsing.
 
-- `golang.org/x/net/html`: HTML parsing package.
+## How It Works
+
+1. **Download HTML Content**: The tool fetches the HTML content of the specified website using an HTTP GET request.
+
+2. **Save HTML Content**: The HTML content is saved to a local file named "index.html" in a folder named "scraped," which is created in the current working directory.
+
+3. **Parse HTML for Assets**: The HTML content is parsed to identify assets such as images, scripts, stylesheets, links, and SVGs.
+
+4. **Download Assets**: The identified assets are downloaded to the "scraped" folder. The tool recognizes and handles various HTML elements like `img`, `script`, `link`, `a`, and `svg`.
+
+5. **Parse CSS Styles**: The tool extracts background images from CSS styles within the HTML content.
+
+6. **Download Background Images**: If background images are found in the CSS styles, they are downloaded and saved to the "scraped" folder.
+
+## Note
+
+- The CSS parsing currently uses a simple regular expression approach for demonstration purposes. For a more robust solution, consider using a dedicated CSS parsing library.
+- This tool may not handle all edge cases, and adjustments might be needed for specific websites.
 
 ## License
 
-This web scraper is released under the [MIT License](LICENSE). Feel free to use and modify it according to your needs.
+This tool is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
